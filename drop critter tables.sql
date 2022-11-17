@@ -1,0 +1,9 @@
+drop table critter.employee_availability;
+drop table critter.employee_skill;
+drop table critter.schedule_activity;
+drop table critter.schedule_employee;
+drop table critter.schedule_pet;
+drop table critter.schedule;
+drop table critter.pet;
+drop table critter.customer;
+drop table critter.employee;
