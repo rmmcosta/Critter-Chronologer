@@ -32,5 +32,9 @@ public class Schedule {
     )
     List<Pet> pets;
     @ElementCollection
+    @JoinTable(
+            name = "schedule_activity"
+    )
+    @Column(name = "activity")
     private Set<EmployeeSkill> activities;
 }

@@ -21,7 +21,14 @@ public class Employee {
     @ManyToMany(mappedBy = "employees")
     private List<Schedule> schedules;
     @ElementCollection
+    @JoinTable(
+            name = "employee_skill"
+    )
+    @Column(name = "skill")
     private Set<EmployeeSkill> skills;
     @ElementCollection
+    @JoinTable(
+            name = "employee_availability"
+    )
     private Set<DayOfWeek> availability;
 }

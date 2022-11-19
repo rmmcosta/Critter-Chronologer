@@ -57,7 +57,7 @@ CREATE TABLE if not exists employee_skill (
 
 CREATE TABLE if not exists employee_availability (
     employee_id BIGINT NOT NULL,
-    day_of_week VARCHAR(10) NOT NULL,
+    availability VARCHAR(10) NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employee(id),
-    UNIQUE KEY emp_day (employee_id, day_of_week)
+    UNIQUE KEY emp_day (employee_id, availability)
 );

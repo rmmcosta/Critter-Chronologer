@@ -7,3 +7,4 @@ drop table critter.schedule;
 drop table critter.pet;
 drop table critter.customer;
 drop table critter.employee;
+drop table critter.hibernate_sequence;
