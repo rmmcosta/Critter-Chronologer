@@ -6,6 +6,7 @@ import lombok.Data;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.time.LocalDate;
 import java.util.List;
 

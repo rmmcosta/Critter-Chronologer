@@ -5,7 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -22,5 +22,5 @@ public class Customer {
     @Nationalized
     private String notes;
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Pet> pets;
+    private Set<Pet> pets;
 }

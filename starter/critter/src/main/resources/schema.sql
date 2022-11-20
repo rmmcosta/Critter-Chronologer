@@ -51,13 +51,13 @@ CREATE TABLE if not exists schedule_activity (
 
 CREATE TABLE if not exists employee_skill (
     employee_id BIGINT NOT NULL,
-    skill VARCHAR(100) NOT NULL,
+    skill int NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employee(id)
 );
 
 CREATE TABLE if not exists employee_availability (
     employee_id BIGINT NOT NULL,
-    availability VARCHAR(10) NOT NULL,
+    availability int NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employee(id),
     UNIQUE KEY emp_day (employee_id, availability)
 );
