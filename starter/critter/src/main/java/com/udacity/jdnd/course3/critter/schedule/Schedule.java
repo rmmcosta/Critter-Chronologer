@@ -20,15 +20,15 @@ public class Schedule {
     @ManyToMany
     @JoinTable(
             name = "schedule_employee",
-            joinColumns = { @JoinColumn(name = "schedule_id")},
-            inverseJoinColumns = { @JoinColumn(name = "employee_id")}
+            joinColumns = {@JoinColumn(name = "schedule_id")},
+            inverseJoinColumns = {@JoinColumn(name = "employee_id")}
     )
     List<Employee> employees;
     @ManyToMany
     @JoinTable(
             name = "schedule_pet",
-            joinColumns = { @JoinColumn(name = "schedule_id")},
-            inverseJoinColumns = { @JoinColumn(name = "pet_id")}
+            joinColumns = {@JoinColumn(name = "schedule_id")},
+            inverseJoinColumns = {@JoinColumn(name = "pet_id")}
     )
     List<Pet> pets;
     @ElementCollection

@@ -6,6 +6,7 @@ import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -34,6 +35,7 @@ public class EmployeeService {
         return employee;
     }
 
+    @Transactional
     public void setAvailability(Long employeeId, Set<DayOfWeek> daysAvailable) {
         for (DayOfWeek dayOfWeek : daysAvailable) {
             employeeRepository.saveAvailability(employeeId, dayOfWeek.getValue());
@@ -41,7 +43,6 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeesForService(LocalDate date, Set<EmployeeSkill> skills) {
-        //return employeeRepository.findEmployeesByAvailabilityAndSkillsIn(date.getDayOfWeek(), skills);
         return getEmployeesForServiceAlternative(date, skills);
     }
 

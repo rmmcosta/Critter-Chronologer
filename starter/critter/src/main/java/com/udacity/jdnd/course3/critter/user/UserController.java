@@ -36,12 +36,12 @@ public class UserController {
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers() {
-        return customerService.getCustomersWithPets().stream().map(this::customerToCustomerDTO).collect(Collectors.toList());
+        return customerService.getCustomers().stream().map(this::customerToCustomerDTO).collect(Collectors.toList());
     }
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId) {
-        return customerToCustomerDTO(customerService.getOwnerWithPetsByPet(petId));
+        return customerToCustomerDTO(customerService.getOwnerByPet(petId));
     }
 
     @PostMapping("/employee")
@@ -70,16 +70,15 @@ public class UserController {
     private Customer customerDtoToCustomer(CustomerDTO customerDTO) {
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDTO, customer);
-        if (customerDTO.getPetIds() != null)
-            customer.setPets(customerDTO.getPetIds().stream().map(petId -> petService.getPet(petId)).collect(Collectors.toSet()));
         return customer;
     }
 
     private CustomerDTO customerToCustomerDTO(Customer customer) {
         CustomerDTO customerDTO = new CustomerDTO();
         BeanUtils.copyProperties(customer, customerDTO);
-        if (customer.getPets() != null)
-            customerDTO.setPetIds(customer.getPets().stream().map(Pet::getId).collect(Collectors.toList()));
+        List<Pet> pets = petService.getPetsByOwner(customer.getId());
+        if (pets != null)
+            customerDTO.setPetIds(pets.stream().map(Pet::getId).collect(Collectors.toList()));
         return customerDTO;
     }
 
