@@ -29,6 +29,10 @@ public class CustomerService {
     }
 
     public Customer getOwnerByPet(Long petId) {
-      return petService.getPet(petId).getOwner();
+        return petService.getPet(petId).getOwner();
+    }
+
+    public void deleteCustomer(Long id) {
+        customerRepository.deleteById(id);
     }
 }

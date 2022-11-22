@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.service;
 
 import com.udacity.jdnd.course3.critter.data.PetRepository;
 import com.udacity.jdnd.course3.critter.pet.Pet;
+import com.udacity.jdnd.course3.critter.pet.PetInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ public class PetService {
     PetRepository petRepository;
 
     public Pet savePet(Pet pet) {
+        if (pet.getOwner() == null) {
+            throw new PetInvalidException("Pet without Owner");
+        }
         return petRepository.save(pet);
     }
 
@@ -26,5 +30,9 @@ public class PetService {
 
     public List<Pet> getPetsByOwner(Long ownerId) {
         return petRepository.findPetsByOwnerId(ownerId);
+    }
+
+    public void deletePet(Long id) {
+        petRepository.deleteById(id);
     }
 }

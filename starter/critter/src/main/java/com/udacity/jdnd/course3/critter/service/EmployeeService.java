@@ -46,6 +46,10 @@ public class EmployeeService {
         return getEmployeesForServiceAlternative(date, skills);
     }
 
+    public void deleteEmployee(Long id) {
+        employeeRepository.deleteById(id);
+    }
+
     private List<Employee> getEmployeesForServiceAlternative(LocalDate date, Set<EmployeeSkill> skills) {
         List<Employee> employeesForService = new ArrayList<>();
         for (Employee employee : getEmployeesWithAvailabilityAndSkills()) {
