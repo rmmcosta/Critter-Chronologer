@@ -15,7 +15,7 @@ public class ScheduleService {
     ScheduleRepository scheduleRepository;
 
     public Schedule saveSchedule(Schedule schedule) {
-        if (schedule.getScheduleDate()==null || schedule.getScheduleDate().isBefore(LocalDate.now().plusDays(1))) {
+        if (schedule.getScheduleDate() == null || schedule.getScheduleDate().isBefore(LocalDate.now().plusDays(1))) {
             throw new ScheduleInvalidException("Invalid Date");
         }
         if (schedule.getPets().isEmpty()) {
@@ -32,6 +32,10 @@ public class ScheduleService {
 
     public List<Schedule> getSchedules() {
         return (List<Schedule>) scheduleRepository.findAll();
+    }
+
+    public Schedule getSchedule(Long id) {
+        return scheduleRepository.findById(id).orElseThrow(ScheduleNotFoundException::new);
     }
 
     public List<Schedule> getScheduleForPet(Long petId) {

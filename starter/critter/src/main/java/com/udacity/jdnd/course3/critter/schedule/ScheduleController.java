@@ -1,6 +1,7 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
 import com.udacity.jdnd.course3.critter.pet.Pet;
+import com.udacity.jdnd.course3.critter.pet.PetInvalidUpdateException;
 import com.udacity.jdnd.course3.critter.service.EmployeeService;
 import com.udacity.jdnd.course3.critter.service.PetService;
 import com.udacity.jdnd.course3.critter.service.ScheduleService;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -32,6 +34,14 @@ public class ScheduleController {
         return scheduleToScheduleDto(scheduleService.saveSchedule(scheduleDtoToSchedule(scheduleDTO)));
     }
 
+    @PutMapping
+    public void updateSchedule(@RequestBody ScheduleDTO scheduleDTO) {
+        if (!(scheduleDTO.getId() > 0)) {
+            throw new ScheduleInvalidUpdateException();
+        }
+        scheduleService.saveSchedule(scheduleDtoToSchedule(scheduleDTO));
+    }
+
     @GetMapping
     public List<ScheduleDTO> getAllSchedules() {
         return scheduleService.getSchedules().stream().map(this::scheduleToScheduleDto).collect(Collectors.toList());
@@ -50,6 +60,16 @@ public class ScheduleController {
     @GetMapping("/customer/{customerId}")
     public List<ScheduleDTO> getScheduleForCustomer(@PathVariable long customerId) {
         return scheduleService.getScheduleForCustomer(customerId).stream().map(this::scheduleToScheduleDto).collect(Collectors.toList());
+    }
+
+    @GetMapping("/{scheduleId}")
+    public ScheduleDTO getSchedule(@PathVariable long scheduleId) {
+        return scheduleToScheduleDto(scheduleService.getSchedule(scheduleId));
+    }
+
+    @DeleteMapping("/{scheduleId}")
+    public void deleteSchedule(@PathVariable long scheduleId) {
+        scheduleService.deleteSchedule(scheduleId);
     }
 
     private Schedule scheduleDtoToSchedule(ScheduleDTO scheduleDTO) {

@@ -24,6 +24,10 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    public List<Employee> getAllEmployees() {
+        return (List<Employee>) employeeRepository.findAll();
+    }
+
     public Employee getEmployee(Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
         if (employee.getAvailability() == null) {

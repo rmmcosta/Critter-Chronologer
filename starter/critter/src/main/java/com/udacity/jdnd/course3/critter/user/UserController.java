@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,9 +35,31 @@ public class UserController {
         return customerToCustomerDTO(customerService.saveCustomer(customerDtoToCustomer(customerDTO)));
     }
 
+    @PutMapping("/customer")
+    public void updateCustomer(@RequestBody CustomerDTO customerDTO) {
+        if (!(customerDTO.getId() > 0)) {
+            throw new CustomerInvalidUpdateException();
+        }
+        Customer customer = customerService.getCustomer(customerDTO.getId());
+        if (!Objects.equals(customerDTO.getName(), customer.getName())) {
+            throw new CustomerInvalidUpdateException();
+        }
+        customerService.saveCustomer(customerDtoToCustomer(customerDTO));
+    }
+
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers() {
         return customerService.getCustomers().stream().map(this::customerToCustomerDTO).collect(Collectors.toList());
+    }
+
+    @GetMapping("/customer/{customerId}")
+    public CustomerDTO getCustomer(@PathVariable long customerId) {
+        return customerToCustomerDTO(customerService.getCustomer(customerId));
+    }
+
+    @DeleteMapping("/customer/{customerId}")
+    public void deleteCustomer(@PathVariable long customerId) {
+        customerService.deleteCustomer(customerId);
     }
 
     @GetMapping("/customer/pet/{petId}")
@@ -49,9 +72,34 @@ public class UserController {
         return employeeToEmployeeDTO(employeeService.saveEmployee(employeeDtoToEmployee(employeeDTO)));
     }
 
-    @PostMapping("/employee/{employeeId}")
+    @PutMapping("/employee")
+    public void updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        if (!(employeeDTO.getId() > 0)) {
+            throw new EmployeeInvalidUpdateException();
+        }
+        Employee employee = employeeService.getEmployee(employeeDTO.getId());
+        if (!Objects.equals(employeeDTO.getName(), employee.getName())) {
+            throw new EmployeeInvalidUpdateException();
+        }
+        employeeService.saveEmployee(employeeDtoToEmployee(employeeDTO));
+    }
+
+    @GetMapping("/employee")
+    public List<EmployeeDTO> getAllEmployees() {
+        return employeeService.getAllEmployees()
+                .stream()
+                .map(this::employeeToEmployeeDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
         return employeeToEmployeeDTO(employeeService.getEmployee(employeeId));
+    }
+
+    @DeleteMapping("/employee/{employeeId}")
+    public void deleteEmployee(@PathVariable long employeeId) {
+        employeeService.deleteEmployee(employeeId);
     }
 
     @PutMapping("/employee/{employeeId}")
