@@ -8,6 +8,7 @@ import org.hibernate.annotations.Nationalized;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -28,4 +29,11 @@ public class Pet {
     private String notes;
     @ManyToMany(mappedBy = "pets")
     private List<Schedule> schedules;
+    @ManyToMany
+    @JoinTable(
+            name = "pet_behavior",
+            joinColumns = {@JoinColumn(name = "pet_id")},
+            inverseJoinColumns = {@JoinColumn(name = "behavior_id")}
+    )
+    private Set<Behavior> behaviors;
 }

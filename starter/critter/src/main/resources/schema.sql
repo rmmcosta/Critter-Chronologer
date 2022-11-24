@@ -63,3 +63,23 @@ CREATE TABLE if not exists employee_availability (
     FOREIGN KEY (employee_id) REFERENCES employee(id),
     UNIQUE KEY emp_day (employee_id, availability)
 );
+
+CREATE TABLE if not exists behavior (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(128) NOT NULL,
+    description VARCHAR(512),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE if not exists pet_type_behavior (
+    behavior_id BIGINT NOT NULL,
+    pet_type int NOT NULL,
+    FOREIGN KEY (behavior_id) REFERENCES behavior(id)
+);
+
+CREATE TABLE if not exists pet_behavior (
+    behavior_id BIGINT NOT NULL,
+    pet_id BIGINT NOT NULL,
+    FOREIGN KEY (behavior_id) REFERENCES behavior(id),
+    FOREIGN KEY (pet_id) REFERENCES pet(id)
+);
