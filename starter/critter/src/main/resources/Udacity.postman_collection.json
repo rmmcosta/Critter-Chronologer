@@ -557,6 +557,32 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Behaviors By Pet Type",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/behavior/petType?petType=CAT",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"behavior",
+						"petType"
+					],
+					"query": [
+						{
+							"key": "petType",
+							"value": "CAT"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
