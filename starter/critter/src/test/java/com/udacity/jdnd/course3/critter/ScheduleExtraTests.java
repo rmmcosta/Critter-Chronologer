@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -72,6 +73,8 @@ public class ScheduleExtraTests {
         employee = employeeService.saveEmployee(employee);
         Schedule schedule = new Schedule();
         schedule.setScheduleDate(LocalDate.now());
+        schedule.setStartTime(LocalTime.of(9,0));
+        schedule.setEndTime(LocalTime.of(10,0));
         schedule.setPets(List.of(pet));
         schedule.setEmployees(List.of(employee));
         schedule.setActivities(Set.of(EmployeeSkill.PETTING));

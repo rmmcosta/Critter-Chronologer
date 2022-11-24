@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -65,6 +66,8 @@ public class AllEntitiesCRUDTests {
         scheduleDTO.setPetIds(List.of(petDTO.getId()));
         scheduleDTO.setDate(LocalDate.now().plusDays(3));
         scheduleDTO.setEmployeeIds(List.of(employeeDTO.getId()));
+        scheduleDTO.setStartTime(LocalTime.of(9,0));
+        scheduleDTO.setEndTime(LocalTime.of(10,0));
         ResponseEntity<ScheduleDTO> scheduleDTOResponseEntity = restTemplate.postForEntity(uri + "/schedule", scheduleDTO, ScheduleDTO.class);
         assertEquals(HttpStatus.OK, scheduleDTOResponseEntity.getStatusCode());
         scheduleDTO.setId(Objects.requireNonNull(scheduleDTOResponseEntity.getBody()).getId());

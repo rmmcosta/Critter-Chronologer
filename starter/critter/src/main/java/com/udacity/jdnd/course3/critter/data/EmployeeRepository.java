@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
@@ -25,4 +27,21 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
     @Query(value = "Select skill from employee_skill where employee_id=:id", nativeQuery = true)
     List<Integer> findSkillsById(Long id);
+
+    @Query(
+            value = "Select e.* " +
+                    "from employee e " +
+                    "where not exists ( select 1 " +
+                                        "from schedule_employee se " +
+                                        "inner join schedule s " +
+                                        "on s.id = se.schedule_id " +
+                                        "where se.employee_id = e.id " +
+                                        "and s.schedule_date = :date " +
+                                        "and (  :startTime between s.start_time and s.end_time " +
+                                                "or :endTime between s.start_time and s.end_time" +
+                                        ")" +
+                    ")",
+            nativeQuery = true
+    )
+    List<Employee> findAvailableEmployeesByTimeslot(LocalTime startTime, LocalTime endTime, LocalDate date);
 }

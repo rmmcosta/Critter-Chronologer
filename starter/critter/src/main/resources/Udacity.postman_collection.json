@@ -204,7 +204,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"date\": \"2022-12-16T04:43:57.995Z\",\r\n    \"employeeIds\": [\r\n        3\r\n    ],\r\n    \"petIds\": [\r\n        2\r\n    ],\r\n    \"activities\": [\r\n        \"PETTING\"\r\n    ]\r\n}",
+					"raw": "{\r\n    \"date\": \"2022-12-16T04:43:57.995Z\",\r\n    \"startTime\":\"10:00\",\r\n    \"endTime\":\"11:00\",\r\n    \"employeeIds\": [\r\n        3\r\n    ],\r\n    \"petIds\": [\r\n        2\r\n    ],\r\n    \"activities\": [\r\n        \"PETTING\"\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -498,6 +498,61 @@
 						"customer",
 						"pet",
 						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Schedules",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/schedule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"schedule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Available Employees by Timeslot",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/user/employee/availability/timeslot?startTime=11:00&endTime=12:00&date=2022-11-25",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"user",
+						"employee",
+						"availability",
+						"timeslot"
+					],
+					"query": [
+						{
+							"key": "startTime",
+							"value": "11:00"
+						},
+						{
+							"key": "endTime",
+							"value": "12:00"
+						},
+						{
+							"key": "date",
+							"value": "2022-11-25"
+						}
 					]
 				}
 			},

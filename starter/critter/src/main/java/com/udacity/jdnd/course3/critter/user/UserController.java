@@ -6,9 +6,12 @@ import com.udacity.jdnd.course3.critter.service.EmployeeService;
 import com.udacity.jdnd.course3.critter.service.PetService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -110,6 +113,16 @@ public class UserController {
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
         return employeeService.getEmployeesForService(employeeDTO.getDate(), employeeDTO.getSkills())
+                .stream()
+                .map(this::employeeToEmployeeDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/employee/availability/timeslot")
+    public List<EmployeeDTO> findAvailableEmployeesByTimeslot(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
+                                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
+                                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return employeeService.getAvailableEmployeesByTimeslot(startTime, endTime, date)
                 .stream()
                 .map(this::employeeToEmployeeDTO)
                 .collect(Collectors.toList());

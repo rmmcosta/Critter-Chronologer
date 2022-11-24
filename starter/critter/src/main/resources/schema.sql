@@ -20,6 +20,8 @@ CREATE TABLE if not exists pet (
 CREATE TABLE if not exists schedule (
     id BIGINT NOT NULL AUTO_INCREMENT,
     schedule_date DATE NOT NULL,
+    start_time time not null,
+    end_time time not null,
     PRIMARY KEY (id)
 );
 

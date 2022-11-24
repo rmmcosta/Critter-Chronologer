@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -119,6 +120,9 @@ public class CritterFunctionalTest {
         CustomerDTO owner = userController.getOwnerByPet(newPet.getId());
         Assertions.assertEquals(owner.getId(), newCustomer.getId());
         Assertions.assertEquals(owner.getPetIds().get(0), newPet.getId());
+
+        petController.deletePet(newPet.getId());
+        userController.deleteCustomer(newCustomer.getId());
     }
 
     @Test
@@ -206,6 +210,8 @@ public class CritterFunctionalTest {
         sched3.setPetIds(sched2.getPetIds());
         sched3.setActivities(Sets.newHashSet(EmployeeSkill.SHAVING, EmployeeSkill.PETTING));
         sched3.setDate(LocalDate.now().plusMonths(1));
+        sched3.setStartTime(LocalTime.of(13, 0));
+        sched3.setEndTime(LocalTime.of(15,0));
         scheduleController.createSchedule(sched3);
 
         /*
@@ -294,6 +300,8 @@ public class CritterFunctionalTest {
         scheduleDTO.setPetIds(petIds);
         scheduleDTO.setEmployeeIds(employeeIds);
         scheduleDTO.setDate(date);
+        scheduleDTO.setStartTime(LocalTime.of(9,0));
+        scheduleDTO.setEndTime(LocalTime.of(10,0));
         scheduleDTO.setActivities(activities);
         return scheduleDTO;
     }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -48,6 +49,10 @@ public class EmployeeService {
 
     public List<Employee> getEmployeesForService(LocalDate date, Set<EmployeeSkill> skills) {
         return getEmployeesForServiceAlternative(date, skills);
+    }
+
+    public List<Employee> getAvailableEmployeesByTimeslot(LocalTime startTime, LocalTime endTime, LocalDate date) {
+        return employeeRepository.findAvailableEmployeesByTimeslot(startTime, endTime, date);
     }
 
     public void deleteEmployee(Long id) {

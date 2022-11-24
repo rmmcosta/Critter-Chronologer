@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +18,8 @@ public class Schedule {
     @GeneratedValue
     private Long id;
     private LocalDate scheduleDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
     @ManyToMany
     @JoinTable(
             name = "schedule_employee",
