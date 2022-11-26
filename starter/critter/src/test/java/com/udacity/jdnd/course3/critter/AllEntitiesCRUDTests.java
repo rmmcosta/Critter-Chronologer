@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -49,6 +50,7 @@ public class AllEntitiesCRUDTests {
         petDTO.setType(PetType.CAT);
         petDTO.setNotes("no notes taken");
         petDTO.setName("Miau");
+        petDTO.setBehaviors(new HashSet<>());
         ResponseEntity<PetDTO> petDTOResponseEntity = restTemplate.postForEntity(uri + "/pet", petDTO, PetDTO.class);
         assertEquals(HttpStatus.OK, petDTOResponseEntity.getStatusCode());
         petDTO.setId(Objects.requireNonNull(petDTOResponseEntity.getBody()).getId());

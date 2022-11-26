@@ -1,6 +1,6 @@
 package com.udacity.jdnd.course3.critter;
 
-import com.udacity.jdnd.course3.critter.pet.BehaviorDTO;
+import com.udacity.jdnd.course3.critter.pet.Behavior;
 import com.udacity.jdnd.course3.critter.pet.PetType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,42 +25,42 @@ public class BehaviorControllerTests {
     @Test
     public void behaviorCrudOk() {
         String url = "http://localhost:" + port + "/behavior";
-        ResponseEntity<BehaviorDTO[]> responseEntityGetAll = restTemplate.getForEntity(url, BehaviorDTO[].class);
+        ResponseEntity<Behavior[]> responseEntityGetAll = restTemplate.getForEntity(url, Behavior[].class);
         assertEquals(HttpStatus.OK, responseEntityGetAll.getStatusCode());
 
         int initCount = Objects.requireNonNull(responseEntityGetAll.getBody()).length;
 
-        ResponseEntity<BehaviorDTO[]> responseEntityGetAllByCat = restTemplate.getForEntity(url + "/petType?petType=CAT", BehaviorDTO[].class);
+        ResponseEntity<Behavior[]> responseEntityGetAllByCat = restTemplate.getForEntity(url + "/petType?petType=CAT", Behavior[].class);
         assertEquals(HttpStatus.OK, responseEntityGetAllByCat.getStatusCode());
         int initCountByCat = Objects.requireNonNull(responseEntityGetAllByCat.getBody()).length;
 
         Map<String, String> requestParamsBird = new HashMap<>();
         requestParamsBird.put("petType","BIRD");
-        ResponseEntity<BehaviorDTO[]> responseEntityGetAllByBird = restTemplate.getForEntity(url + "/petType?petType=BIRD", BehaviorDTO[].class, requestParamsBird);
+        ResponseEntity<Behavior[]> responseEntityGetAllByBird = restTemplate.getForEntity(url + "/petType?petType=BIRD", Behavior[].class, requestParamsBird);
         assertEquals(HttpStatus.OK, responseEntityGetAllByBird.getStatusCode());
         int initCountByBird = Objects.requireNonNull(responseEntityGetAllByBird.getBody()).length;
 
-        BehaviorDTO behaviorDTO = new BehaviorDTO();
+        Behavior behaviorDTO = new Behavior();
         behaviorDTO.setName("Jump");
         behaviorDTO.setDescription("Jump is a behavior for dogs and cats.");
         behaviorDTO.setPetTypes(List.of(PetType.CAT, PetType.DOG));
-        ResponseEntity<BehaviorDTO> responseEntityPost = restTemplate.postForEntity(url, behaviorDTO, BehaviorDTO.class);
+        ResponseEntity<Behavior> responseEntityPost = restTemplate.postForEntity(url, behaviorDTO, Behavior.class);
         assertEquals(HttpStatus.OK, responseEntityPost.getStatusCode());
         final Long behaviorId = Objects.requireNonNull(responseEntityPost.getBody()).getId();
 
-        responseEntityGetAll = restTemplate.getForEntity(url, BehaviorDTO[].class);
+        responseEntityGetAll = restTemplate.getForEntity(url, Behavior[].class);
         assertEquals(initCount + 1, Objects.requireNonNull(responseEntityGetAll.getBody()).length);
 
-        responseEntityGetAllByCat = restTemplate.getForEntity(url + "/petType?petType=CAT", BehaviorDTO[].class);
+        responseEntityGetAllByCat = restTemplate.getForEntity(url + "/petType?petType=CAT", Behavior[].class);
         assertEquals(initCount + 1, Objects.requireNonNull(responseEntityGetAllByCat.getBody()).length);
-        responseEntityGetAllByBird = restTemplate.getForEntity(url + "/petType?petType=BIRD", BehaviorDTO[].class, requestParamsBird);
+        responseEntityGetAllByBird = restTemplate.getForEntity(url + "/petType?petType=BIRD", Behavior[].class, requestParamsBird);
         assertEquals(initCountByBird, Objects.requireNonNull(responseEntityGetAllByBird.getBody()).length);
 
-        ResponseEntity<BehaviorDTO> responseEntityGet = restTemplate.getForEntity(url + "/" + behaviorId, BehaviorDTO.class);
+        ResponseEntity<Behavior> responseEntityGet = restTemplate.getForEntity(url + "/" + behaviorId, Behavior.class);
         assertEquals(HttpStatus.OK, responseEntityGet.getStatusCode());
 
         restTemplate.delete(url + "/" + behaviorId);
-        responseEntityGetAll = restTemplate.getForEntity(url, BehaviorDTO[].class);
+        responseEntityGetAll = restTemplate.getForEntity(url, Behavior[].class);
         assertEquals(initCount, Objects.requireNonNull(responseEntityGetAll.getBody()).length);
         assertFalse(Arrays.stream(responseEntityGetAll.getBody()).anyMatch(behaviorDTO1 -> behaviorDTO1.getId().equals(behaviorId)));
     }

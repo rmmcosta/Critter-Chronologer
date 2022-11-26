@@ -49,6 +49,7 @@ public class PetExtraTests {
         customer.setPhoneNumber("1234-556");
         customer = customerService.saveCustomer(customer);
         pet.setOwner(customer);
+        pet.setBehaviors(new HashSet<>());
         assertDoesNotThrow(() -> petService.savePet(pet));
         petService.deletePet(pet.getId());
         customerService.deleteCustomer(customer.getId());

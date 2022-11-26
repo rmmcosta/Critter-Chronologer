@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -72,6 +73,7 @@ public class CritterFunctionalTest {
 
         PetDTO petDTO = createPetDTO();
         petDTO.setOwnerId(newCustomer.getId());
+        petDTO.setBehaviors(new HashSet<>());
         PetDTO newPet = petController.savePet(petDTO);
 
         //make sure pet contains customer id
@@ -97,6 +99,7 @@ public class CritterFunctionalTest {
 
         PetDTO petDTO = createPetDTO();
         petDTO.setOwnerId(newCustomer.getId());
+        petDTO.setBehaviors(new HashSet<>());
         PetDTO newPet = petController.savePet(petDTO);
         petDTO.setType(PetType.DOG);
         petDTO.setName("DogName");
@@ -115,6 +118,7 @@ public class CritterFunctionalTest {
 
         PetDTO petDTO = createPetDTO();
         petDTO.setOwnerId(newCustomer.getId());
+        petDTO.setBehaviors(new HashSet<>());
         PetDTO newPet = petController.savePet(petDTO);
 
         CustomerDTO owner = userController.getOwnerByPet(newPet.getId());
@@ -183,6 +187,7 @@ public class CritterFunctionalTest {
         CustomerDTO customerDTO = userController.saveCustomer(createCustomerDTO());
         PetDTO petTemp = createPetDTO();
         petTemp.setOwnerId(customerDTO.getId());
+        petTemp.setBehaviors(new HashSet<>());
         PetDTO petDTO = petController.savePet(petTemp);
 
         LocalDate date = LocalDate.now().plusDays(10);
@@ -261,6 +266,7 @@ public class CritterFunctionalTest {
         petDTO.setBirthDate(LocalDate.now());
         petDTO.setNotes("Hi Kilo");
         petDTO.setOwnerId(customerDTO.getId());
+        petDTO.setBehaviors(new HashSet<>());
         petController.savePet(petDTO);
         assertDoesNotThrow(() -> userController.getAllCustomers());
     }
@@ -319,6 +325,7 @@ public class CritterFunctionalTest {
                 .mapToObj(i -> createPetDTO())
                 .map(p -> {
                     p.setOwnerId(cust.getId());
+                    p.setBehaviors(new HashSet<>());
                     return petController.savePet(p).getId();
                 }).collect(Collectors.toList());
         return scheduleController.createSchedule(createScheduleDTO(petIds, employeeIds, date, activities));

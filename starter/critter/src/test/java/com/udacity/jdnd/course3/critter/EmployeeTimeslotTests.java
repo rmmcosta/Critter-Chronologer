@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -49,6 +50,7 @@ public class EmployeeTimeslotTests {
         pet.setBirthDate(LocalDate.now());
         pet.setType(PetType.CAT);
         pet.setNotes("bla, bla, bla");
+        pet.setBehaviors(new HashSet<>());
         pet = petService.savePet(pet);
 
         Employee employee1 = new Employee();

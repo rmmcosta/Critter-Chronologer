@@ -65,6 +65,7 @@ public class ScheduleExtraTests {
         pet.setBirthDate(LocalDate.of(2020, 1, 1));
         pet.setNotes("ai e tal");
         pet.setName("Puskas");
+        pet.setBehaviors(new HashSet<>());
         pet = petService.savePet(pet);
         Employee employee = new Employee();
         employee.setAvailability(Set.of(DayOfWeek.MONDAY));
