@@ -1,13 +1,11 @@
 package com.udacity.jdnd.course3.critter.pet;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.udacity.jdnd.course3.critter.views.Views;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
